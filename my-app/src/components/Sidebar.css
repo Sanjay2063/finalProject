@@ -1,0 +1,96 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #343a40;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    margin-left: 250px; /* Space for the sidebar */
+    padding: 20px;
+    width: 100%;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers horizontally */
+    padding: 20px 50px 20px 20px; /* top, right, bottom, left */
+    flex-direction: row; /* Ensures logo and name are side by side */
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    margin-right: 15px;
+}
+
+.website-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.nav {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    flex-grow: 1; /* Ensures nav section grows to take available space */
+}
+
+.nav-item {
+    width: 100%;
+    margin-left: 8px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.nav-link i {
+    margin-right: 10px; /* Spacing between icon and text */
+    font-size: 1.2rem;
+}
+
+.nav-link:hover {
+    background-color: #495057;
+}
+
+.logout-section {
+    padding: 20px;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 10px;
+    background-color: #dc3545;
+    text-decoration: none;
+}
+
+.logout:hover {
+    background-color: #c82333;
+}
+
+.logout i {
+    margin-right: 10px;
+}
