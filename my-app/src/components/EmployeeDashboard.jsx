@@ -5,11 +5,13 @@ const EmployeeDashboard = () => {
     const [skills, setSkills] = useState([]);
     const [newSkill, setNewSkill] = useState('');
 
+    // Fetch skills when component loads
     useEffect(() => {
-        // Fetch employee's skills from the backend
         const fetchSkills = async () => {
             try {
-                const response = await axios.get('/api/employee/skills');
+                const response = await axios.get('http://localhost:5000/api/employee/skills', {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                });
                 setSkills(response.data.skills);
             } catch (error) {
                 console.error('Error fetching skills:', error);
@@ -18,33 +20,48 @@ const EmployeeDashboard = () => {
         fetchSkills();
     }, []);
 
+    // Function to handle adding a new skill
     const handleAddSkill = async () => {
         if (!newSkill) {
             alert('Please enter a skill.');
             return;
         }
-
+    
         try {
-            // Send new skill to the backend
-            console.log(localStorage.getItem('token'))
-            const response = await axios.post('/api/employee/skills', { skills: newSkill }, {
+            // Ensure the URL matches the route on your server
+            const response = await axios.post('http://localhost:5000/api/employee/skills', { skills: newSkill }, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
-            
-            // Add the new skill to the existing list
-            setSkills((prevSkills) => [...prevSkills, response.data.skill]);
+    
+            // Update the skills array from the response
+            setSkills(response.data.skills);  // Use the skills array from the response
             setNewSkill(''); // Clear the input field
         } catch (error) {
             console.error('Error adding skill:', error);
+            alert('Failed to add skill. Please try again.');
         }
     };
-
-    const handleEditSkill = (index) => {
+    // Function to handle editing a skill
+    const handleEditSkill = async (index) => {
         const updatedSkills = [...skills];
         const newSkillName = prompt('Edit skill:', updatedSkills[index]);
+
         if (newSkillName) {
-            updatedSkills[index] = newSkillName;
-            setSkills(updatedSkills);
+            try {
+                // Send updated skill to the backend
+                const response = await axios.put('http://localhost:5000/api/employee/skills', {
+                    skillIndex: index,
+                    newSkillName
+                }, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                });
+
+                // Update the skills array from the response
+                setSkills(response.data.skills);
+            } catch (error) {
+                console.error('Error updating skill:', error);
+                alert('Failed to update skill. Please try again.');
+            }
         }
     };
 
@@ -80,6 +97,18 @@ const EmployeeDashboard = () => {
                     onChange={(e) => setNewSkill(e.target.value)}
                     placeholder="Add new skill"
                 />
+                <input
+                    type="text"
+                    value={newSkill}
+                    onChange={(e) => setNewSkill(e.target.value)}
+                    placeholder="Add new skill"
+                />
+                <input
+                    type="text"
+                    value={newSkill}
+                    onChange={(e) => setNewSkill(e.target.value)}
+                    placeholder="Add new skill"
+                />
                 <button className="btn btn-success" onClick={handleAddSkill}>
                     Add Skill
                 </button>
@@ -89,4 +118,3 @@ const EmployeeDashboard = () => {
 };
 
 export default EmployeeDashboard;
-

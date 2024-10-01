@@ -28,7 +28,9 @@ const LoginForm = () => {
             // Handle success for login
             if (isSignIn) {
                 localStorage.setItem('token', response.data.token);
-                localStorage.setItem('username', formData.email); // Store actual username if available
+                localStorage.setItem('username', formData.email);
+                localStorage.setItem('role', response.data.role); // Store role in local storage
+                
                 navigate('/home'); // Redirect to home page
             } else {
                 // Handle success for sign up
@@ -44,6 +46,7 @@ const LoginForm = () => {
             alert('User not found or password is incorrect'); // Show alert
         }
     };
+    
 
     const toggleForm = () => {
         setIsSignIn(!isSignIn); // Toggle between Login and Sign Up
